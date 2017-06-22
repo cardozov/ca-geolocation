@@ -20,5 +20,8 @@
     "Ambiental"
   ],
   "author": "Vinicius Goulart Cardozo <vinicius.gcardozo@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^1.7.1"
+  }
 }
