@@ -1,0 +1,24 @@
+{
+  "name": "ca-geolocation",
+  "version": "1.0.0",
+  "description": "This is a cross platform desktop app to support geolocating contaminated areas of Sao Paolo, state of Brazil",
+  "main": "main.js",
+  "scripts": {
+    "test": "start",
+    "start": "electron ."
+  },
+  "keywords": [
+    "Contaminated",
+    "Areas",
+    "Geolocation",
+    "Ambiental",
+    "Engeneering",
+    "Areas",
+    "Contaminadas",
+    "Geolocalizacao",
+    "Engenharia",
+    "Ambiental"
+  ],
+  "author": "Vinicius Goulart Cardozo <vinicius.gcardozo@gmail.com>",
+  "license": "MIT"
+}
