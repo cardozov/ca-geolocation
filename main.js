@@ -1,6 +1,6 @@
 
 //-------------- # Module Imports
-const { app, ipcMain } = require('electron')
+const { app, ipcMain, remote } = require('electron')
 const FlowManager = require('./app/utils/flow-manager.js')
 //Setting root constant reference
 FlowManager.ROOT = `file://${__dirname}`
@@ -13,6 +13,7 @@ app.on('window-all-closed', _closeApp)
 
 //-------------- # Event Handling - Rendering Process
 ipcMain.on('close-app', _closeApp)
+ipcMain.on('minimize-page',_minimizePage)
 
 //-------------- # Private Functions
 function _onReady() {
@@ -24,6 +25,10 @@ function _onReady() {
         minHeight: 400,
         frame: false
     })
+}
+
+function _minimizePage(){
+    FlowManager.minimize()
 }
 
 function _closeApp() {
