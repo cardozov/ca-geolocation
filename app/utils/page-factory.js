@@ -1,4 +1,4 @@
-const {BrowserWindow} = require('electron')
+const { BrowserWindow } = require('electron')
 
 module.exports = class PageFactory {
     constructor(config, url){
