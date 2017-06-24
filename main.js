@@ -27,7 +27,7 @@ function _onReady() {
         minWidth: 600,
         minHeight: 400,
         frame: false
-    },"http://www.github.com")
+    },"http://www.google.com")
 
     FlowManager.goToIndex({
         width: 600,
