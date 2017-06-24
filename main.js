@@ -25,8 +25,7 @@ function _onReady() {
         width: 600,
         height: 400,
         minWidth: 600,
-        minHeight: 400,
-        frame: false
+        minHeight: 400
     },"http://www.google.com")
 
     FlowManager.goToIndex({
