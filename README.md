@@ -27,5 +27,15 @@ Aplicação Modular com Electron estruturada semanticamente em áreas
 2. npm install
 3. npm start
 
+## Export/Publish do projeto
+
+### Para uma plataforma (Windows)
+1. Adicionar um icone .png no **mesmo nível** da pasta do projeto
+2. Executar o comando no **mesmo nível** da pasta do projeto ```electron-packager ./ca-geolocation/ ca-geolocation --platform=win32 --arch=x64 --icon=./icon.png```
+
+### Para todas as plataformas
+1. Converter um icone base (png) [neste site](https://iconverticons.com/online/)
+2. Criar uma pasta com todas as extensões de icones (todos com o mesmo nome) no **mesmo nível** da pasta do projeto
+3. Executar o comando no **mesmo nível** da pasta do projeto ```electron-packager ./ca-geolocation/ ca-geolocation --platform=all --arch=x64 --icon=./icons/icon```
 
  **Desenv 2017** Corcurex
