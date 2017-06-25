@@ -15,6 +15,7 @@ let uploadPath = document.querySelector("#upload-path")
 let exportComponent  = document.querySelector( "#export-input" )  
 let exportBtn = document.querySelector( "#export-btn" )
 let exportPath = document.querySelector("#export-path")
+let startBtn = document.querySelector('#start-btn')
 
 //-------------- # Event Handling
 
@@ -22,8 +23,15 @@ let exportPath = document.querySelector("#export-path")
 //-------------- # Private Functions
 function _uploadCallback(data) {
     uploadPath.textContent = data.files[0].path
+    _validateRequirements()
 }
 
 function _exportCallback(data) {
     exportPath.textContent = data.files[0].path
+    _validateRequirements()
+}
+
+function _validateRequirements(){
+    if(uploadPath.textContent && exportPath.textContent)
+        startBtn.classList.remove("disabled")
 }

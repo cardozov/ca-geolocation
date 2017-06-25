@@ -9,7 +9,7 @@
         <link type="text/css" rel="stylesheet" href="../../../node_modules/materialize-css/dist/css/materialize.min.css" media="screen,projection"/>
 
     </head>
-    <body>
+    <body class="container">
         <div>
             <h1>CA Geolocation</h1>
             <a id="info-btn" class="btn-floating btn-large waves-effect waves-light z-depth-0 transparent">
@@ -17,7 +17,7 @@
             </a>
         </div>
         
-        <div>
+        <div class="center-align">
             <p class="flow-text">ONDE ESTÁ O PDF DE ÁREAS CONTAMINADAS?</p class>
             <p id="upload-path"></p>
             <input id="upload-input" name="upload-input" accept=".pdf" type="file">
@@ -26,7 +26,7 @@
             </a>
         </div>
 
-        <div>
+        <div class="center-align">
             <p class="flow-text">ONDE QUER QUE OS ARQUIVOS DE SAÍDA ESTEJAM?</p class>
             <p id="export-path"></p>
             <input id="export-input" name="export-input" webkitdirectory directory type="file">
@@ -35,12 +35,13 @@
             </a>
         </div>
 
-        <div>
+        <div class="right-align">
             <p class="flow-text">TUDO PRONTO?</p>
-            <a class="waves-effect waves-light btn-large blue pulse disabled">
+            <a id="start-btn" class="waves-effect waves-light btn-large right-align blue disabled">
                 <i class="material-icons right">settings</i>Iniciar
             </a>
         </div>
+
     </body>
 
     <script src="./home.controller.js"></script>
