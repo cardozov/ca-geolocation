@@ -11,31 +11,37 @@
     </head>
     <body class="container">
         <div>
-            <h1>CA Geolocation</h1>
+            <h1>CA Geolocation </h1>
             <a id="info-btn" class="btn-floating btn-large waves-effect waves-light z-depth-0 transparent">
                 <i class="material-icons left blue-text text-lighten-1">info_outline</i>
             </a>
         </div>
+
+        <div class="divider"></div>
         
-        <div class="center-align">
+        <div class="center-align row section">
             <p class="flow-text">ONDE ESTÁ O PDF DE ÁREAS CONTAMINADAS?</p class>
-            <p id="upload-path"></p>
-            <input id="upload-input" name="upload-input" accept=".pdf" type="file">
+            <input disabled type="text" id="upload-path">
             <a id="upload-btn" class="waves-effect waves-light btn cyan">
                 <i class="material-icons left">attach_file</i>Selecionar
             </a>
+            <!-- Invisible --><input id="upload-input" name="upload-input" accept=".pdf" type="file">
         </div>
 
-        <div class="center-align">
+        <div class="divider"></div>
+
+        <div class="center-align row section">
             <p class="flow-text">ONDE QUER QUE OS ARQUIVOS DE SAÍDA ESTEJAM?</p class>
-            <p id="export-path"></p>
-            <input id="export-input" name="export-input" webkitdirectory directory type="file">
+            <p id="export-path" class="path-text"></p>
             <a id="export-btn" class="waves-effect waves-light btn cyan">
                 <i class="material-icons left">note_add</i>Selecionar
             </a>
+            <!-- Invisible --><input id="export-input" name="export-input" webkitdirectory directory type="file">
         </div>
 
-        <div class="right-align">
+        <div class="divider"></div>
+
+        <div class="right-align row section">
             <p class="flow-text">TUDO PRONTO?</p>
             <a id="start-btn" class="waves-effect waves-light btn-large right-align blue disabled">
                 <i class="material-icons right">settings</i>Iniciar

@@ -4,6 +4,7 @@ const { app, ipcMain, BrowserWindow, Menu, globalShortcut } = require('electron'
 const Constants = require('./app/utils/constants.js')
 const Global = require('./app/utils/globals.js')
 const MenuService = require('./app/utils/services/menu-service.js')
+const pdfreader = require('pdfreader')
 
 //-------------- # Variables and Properts
 let win = null
@@ -13,6 +14,7 @@ app.on('ready', _onReady)
 app.on('window-all-closed', _closeApp)
 
 //-------------- # Event Handling - Rendering Process
+ipcMain.on('start-process', _onStartProcess)
 
 //-------------- # Private Functions
 function _onReady() {
@@ -42,6 +44,19 @@ function _menuTemplateHandler(){
     //Atalhos globais da aplicação
     globalShortcut.register('CmdOrCtrl+Shift+A', () => {
         win.send('atalho-upload');
+    });
+}
+
+function _onStartProcess(event, file, folder){
+    console.log(`file: ${file}\nfolder: ${folder}`)
+
+    new pdfreader.PdfReader().parseFileItems(file, function(err, item){
+        if (err)
+            console.log('err');
+        else if (!item)
+            console.log('!item');
+        else if (item.text)
+            console.log(item.text);
     });
 }
 

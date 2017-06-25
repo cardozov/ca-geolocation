@@ -4,7 +4,7 @@
   "description": "This is a cross platform desktop app to support geolocating contaminated areas of Sao Paolo, state of Brazil",
   "main": "main.js",
   "scripts": {
-    "test": "start",
+    "test": "echo \nTests not implemented.",
     "start": "electron ."
   },
   "keywords": [
@@ -23,6 +23,7 @@
   "license": "MIT",
   "dependencies": {
     "electron": "^1.7.1",
-    "materialize-css": "^0.99.0"
+    "materialize-css": "^0.99.0",
+    "pdfreader": "^0.2.4"
   }
 }
