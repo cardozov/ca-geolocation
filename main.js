@@ -50,14 +50,23 @@ function _menuTemplateHandler(){
 function _onStartProcess(event, file, folder){
     console.log(`file: ${file}\nfolder: ${folder}`)
 
+    let text = ""
+
     new pdfreader.PdfReader().parseFileItems(file, function(err, item){
         if (err)
-            console.log('err');
+            console.log('err')
         else if (!item)
-            console.log('!item');
+            console.log('!item')
         else if (item.text)
-            console.log(item.text);
+            text = item.text
     });
+
+    if(!text){
+        ModalService.showError('Ooops!','Houve um problema na hora de abrir o arquivo.\nTem certeza que é o PDF certo?')
+        return
+    }
+
+    TextFilterService.proceed(text)
 }
 
 function _closeApp() {
