@@ -1,0 +1,8 @@
+html {
+  font-family: GillSans, Calibri, Trebuchet, sans-serif;
+}
+
+input[type=file] {
+  opacity: 0;
+  position: fixed;
+}

@@ -1,23 +1,29 @@
 
+document.addEventListener('DOMContentLoaded',() => {
+    InputFileService.createInputTrigger(uploadComponent, uploadBtn, _uploadCallback)
+    InputFileService.createInputTrigger(exportComponent, exportBtn, _exportCallback)
+})
+
 //-------------- # Module Imports
 const { ipcRenderer } = require('electron')
+const InputFileService = require('../../utils/services/input-file-service.js')
 
 //-------------- # Variables and Properts
-const $ = document.querySelector
-let uploadComponent = $('#upload-input')
-let exportComponent = $('#export-input')
+let uploadComponent  = document.querySelector( "#upload-input" )  
+let uploadBtn = document.querySelector( "#upload-btn" )
+let uploadPath = document.querySelector("#upload-path")
+let exportComponent  = document.querySelector( "#export-input" )  
+let exportBtn = document.querySelector( "#export-btn" )
+let exportPath = document.querySelector("#export-path")
 
 //-------------- # Event Handling
-uploadComponent.addEventListener('click', _onUploadChange)
-exportComponent.addEventListener('change', _onExportChange)
+
 
 //-------------- # Private Functions
-function _onUploadChange(){
-    alert('changed')
-    //TODO: verifying statement
+function _uploadCallback(data) {
+    uploadPath.textContent = data.files[0].path
 }
 
-function _onExportChange(){
-    alert('changed')
-    //TODO: verifying statement
+function _exportCallback(data) {
+    exportPath.textContent = data.files[0].path
 }

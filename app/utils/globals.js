@@ -1,9 +1,12 @@
+const Constants = require('./constants.js')
+
 module.exports = Global = {
     windowConfig: {
         height: 700,
         width: 700,
         minWidth: 700,
-        minHeight: 700
+        minHeight: 700,
+        backgroundColor: Constants.BACKGROUND_COLOR
     },
     templateMenu: [
         {
