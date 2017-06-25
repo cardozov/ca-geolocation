@@ -1,44 +1,48 @@
 
 //-------------- # Module Imports
-const { app, ipcMain, remote } = require('electron')
+const { app, ipcMain, BrowserWindow, Menu, globalShortcut } = require('electron')
 const Constants = require('./app/utils/constants.js')
-const FlowManager = require('./app/utils/flow-manager.js')
-//Setting root constant reference
-FlowManager.ROOT = `file://${__dirname}`
-const PageFactory = require('./app/utils/page-factory.js')
+const Global = require('./app/utils/globals.js')
+const MenuService = require('./app/utils/services/menu-service.js')
 
 //-------------- # Variables and Properts
+let win = null
 
 //-------------- # Event Handling - Main Process
 app.on('ready', _onReady)
 app.on('window-all-closed', _closeApp)
 
 //-------------- # Event Handling - Rendering Process
-ipcMain.on('close-app', _closeApp)
-ipcMain.on('minimize-page',_minimizePage)
 
 //-------------- # Private Functions
 function _onReady() {
+    
     console.log('Aplicacao Iniciada')
 
-    page = new PageFactory({
-        width: 600,
-        height: 400,
-        minWidth: 600,
-        minHeight: 400
-    },"http://www.google.com")
+    win = new BrowserWindow(_getConfig())
 
-    FlowManager.goToIndex({
-        width: 600,
-        height: 400,
-        minWidth: 600,
-        minHeight: 400,
-        frame: false
-    })
+    _menuTemplateHandler()
+
+    win.loadURL(_getPath())
 }
 
-function _minimizePage(){
-    FlowManager.minimize()
+function _getConfig() {
+    return Global.windowConfig
+}
+
+function _getPath(){
+    return `${__dirname}/${Constants.URL.HOME}`
+}
+
+function _menuTemplateHandler(){
+    let templateMenu = MenuService.generateTemplateMenu(app.getName())
+    let menuPrincipal = Menu.buildFromTemplate(templateMenu)
+    Menu.setApplicationMenu(menuPrincipal)
+
+    //Atalhos globais da aplicação
+    globalShortcut.register('CmdOrCtrl+Shift+A', () => {
+        win.send('atalho-upload');
+    });
 }
 
 function _closeApp() {
