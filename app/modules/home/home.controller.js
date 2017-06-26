@@ -41,4 +41,5 @@ function _validateRequirements(){
 
 function _onStartBtnClick(){
     ipcRenderer.send('start-process', file, folder)
+    startBtn.setAttribute('disabled',true)
 }

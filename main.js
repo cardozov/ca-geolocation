@@ -4,7 +4,10 @@ const { app, ipcMain, BrowserWindow, Menu, globalShortcut } = require('electron'
 const Constants = require('./app/utils/constants.js')
 const Global = require('./app/utils/globals.js')
 const MenuService = require('./app/utils/services/menu-service.js')
-const pdfreader = require('pdfreader')
+const { TextFilterService } = require('./app/utils/services/text-service.js')
+const pdfText = require('pdf-text')
+const fs = require('fs')
+const PDFParser = require("pdf2json")
 
 //-------------- # Variables and Properts
 let win = null
@@ -49,24 +52,38 @@ function _menuTemplateHandler(){
 
 function _onStartProcess(event, file, folder){
     console.log(`file: ${file}\nfolder: ${folder}`)
+    
+    pdfText(file, function(err, text) {
+        if(err){
+            ModalService.showError('Ooops!','Houve um problema na hora de abrir o arquivo.\nTem certeza que é o PDF certo?', Constants.ICON.ALERT)
+            return
+        }
 
-    let text = ""
+        let d1 = `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}:${new Date().getMilliseconds()}`
+        
+        /*
+        let pdfParser = new PDFParser();
+ 
+        pdfParser.on("pdfParser_dataError", errData => console.error(errData.parserError) );
+        pdfParser.on("pdfParser_dataReady", pdfData => {
+            fs.writeFile(folder+"/teste.json", JSON.stringify(pdfData));
+        });
+    
+        pdfParser.loadPDF(file)*/
+        text = text
+            .filter((x,i) => {
+                if(text[i+1] == 'indústria') return x
+            })
+            .map( x => 
+                x.slice(x.lastIndexOf('-')+1)
+                .trim())
+        console.log(text)
+        //TextFilterService.proceed(text.slice(0,20))
+        let d2 = `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}:${new Date().getMilliseconds()}`
 
-    new pdfreader.PdfReader().parseFileItems(file, function(err, item){
-        if (err)
-            console.log('err')
-        else if (!item)
-            console.log('!item')
-        else if (item.text)
-            text = item.text
-    });
-
-    if(!text){
-        ModalService.showError('Ooops!','Houve um problema na hora de abrir o arquivo.\nTem certeza que é o PDF certo?')
-        return
-    }
-
-    TextFilterService.proceed(text)
+        console.log(d1,' - ',d2)
+    })
+    
 }
 
 function _closeApp() {

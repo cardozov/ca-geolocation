@@ -7,6 +7,10 @@ input[type=file] {
   position: fixed;
 }
 
-.path-text{
-  border: 1px solid black;
+.ca-btn-label {
+  padding-right: 20px;
 }
+
+ .ca-path-label {
+   text-align: center;
+ }
