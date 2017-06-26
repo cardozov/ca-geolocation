@@ -15,11 +15,11 @@ Aplicação Modular com Electron estruturada semanticamente em áreas
 
 ## Mecanismos de controle e qualidade
 
-[Guidelines Mecanismos de controle e qualidade](https://docs.google.com/a/medgrupo.com.br/document/d/1bILLkbjKtbnS9xbH9S27zD_F5FsQUbVb1V1btwDqCKg/edit?usp=sharing "Mecanismos de controle e qualidade")
+[Guidelines Mecanismos de controle e qualidade](https://docs.google.com/document/d/14MFQKZwa-qQnMdY0arblNNj09DNmeO7f8lxidmEX-o4/edit?usp=sharing "Mecanismos de controle e qualidade")
 
 ## Workflow Git
 
-[Guidelines  Workflow Git](https://docs.google.com/a/medgrupo.com.br/document/d/1m2dMAIeoEIfow70hEDMqGHxD5WFN-0n8LeeE6DXEsOY/edit?usp=sharing "Guia Workflow Git")
+[Guidelines  Workflow Git](https://docs.google.com/document/d/10CCjqRoMT5H3ZcUOqaCq1dWkmrvHtEHi1FjdvTD1A_c/edit?usp=sharing "Guia Workflow Git")
 
 ## Build do projeto
 
