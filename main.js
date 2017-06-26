@@ -1,16 +1,18 @@
 
 //-------------- # Module Imports
 const { app, ipcMain, BrowserWindow, Menu, globalShortcut } = require('electron')
+const fs = require("fs")
 const Constants = require('./app/utils/constants.js')
 const Global = require('./app/utils/globals.js')
 const MenuService = require('./app/utils/services/menu-service.js')
 const { TextFilterService } = require('./app/utils/services/text-service.js')
-const pdfText = require('pdf-text')
-const fs = require('fs')
-const PDFParser = require("pdf2json")
+const { KMLService, XLSService } = require('./app/utils/services/file-service')
 
 //-------------- # Variables and Properts
 let win = null
+let areasByCity
+let pdfPath
+let folderPath
 
 //-------------- # Event Handling - Main Process
 app.on('ready', _onReady)
@@ -18,6 +20,11 @@ app.on('window-all-closed', _closeApp)
 
 //-------------- # Event Handling - Rendering Process
 ipcMain.on('start-process', _onStartProcess)
+ipcMain.on('filter-stop', areas => {
+    areasByCity = areas
+    //KMLService.createKML(areasByCity)
+    XLSService.createXLS(folderPath, areasByCity)
+})
 
 //-------------- # Private Functions
 function _onReady() {
@@ -52,38 +59,10 @@ function _menuTemplateHandler(){
 
 function _onStartProcess(event, file, folder){
     console.log(`file: ${file}\nfolder: ${folder}`)
+    pdfPath = file
+    folderPath = folder
     
-    pdfText(file, function(err, textArray) {
-        if(err){
-            ModalService.showError('Ooops!','Houve um problema na hora de abrir o arquivo.\nTem certeza que é o PDF certo?', Constants.ICON.ALERT)
-            return
-        }
-
-        let d1 = `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}:${new Date().getMilliseconds()}`
-        
-        /*
-        let pdfParser = new PDFParser();
- 
-        pdfParser.on("pdfParser_dataError", errData => console.error(errData.parserError) );
-        pdfParser.on("pdfParser_dataReady", pdfData => {
-            fs.writeFile(folder+"/teste.json", JSON.stringify(pdfData));
-        });
-    
-        pdfParser.loadPDF(file)*/
-        textArray = textArray
-            .filter((row,idx) => {
-                if(textArray[idx+1] == 'indústria') return row
-            })
-            .map( x => 
-                x.slice(x.lastIndexOf('-')+1)
-                .trim())
-        console.log(textArray)
-        //TextFilterService.proceed(text.slice(0,20))
-        let d2 = `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}:${new Date().getMilliseconds()}`
-
-        console.log(d1,' - ',d2)
-    })
-    
+    TextFilterService.proceed(file, folder, win)
 }
 
 function _closeApp() {
