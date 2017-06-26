@@ -26,7 +26,6 @@ class XLSService {
     constructor(){}
 
     static createXLS(filePath, cities){
-        //let writeStream = fs.createWriteStream(`${filePath}/Áreas_Contaminadas_e_Reabilitadas.xls`)
         let rows = []
 
         Object.keys(cities).forEach(prop => {
@@ -35,7 +34,7 @@ class XLSService {
 
         let buffer = new Buffer(`NOME\tNOME\tFUSO\tDATUM\tUTM_E\tUTM_N\n${rows.join('\n')}`)
 
-        fs.open(`${filePath}/Áreas_Contaminadas_e_Reabilitadas.xlsx`, 'w', (err, fd) => {
+        fs.open(`${filePath}/Áreas_Contaminadas_e_Reabilitadas.xls`, 'w', (err, fd) => {
             if (err) {
                 throw 'error opening file: ' + err;
             }
