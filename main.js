@@ -53,7 +53,7 @@ function _menuTemplateHandler(){
 function _onStartProcess(event, file, folder){
     console.log(`file: ${file}\nfolder: ${folder}`)
     
-    pdfText(file, function(err, text) {
+    pdfText(file, function(err, textArray) {
         if(err){
             ModalService.showError('Ooops!','Houve um problema na hora de abrir o arquivo.\nTem certeza que é o PDF certo?', Constants.ICON.ALERT)
             return
@@ -70,14 +70,14 @@ function _onStartProcess(event, file, folder){
         });
     
         pdfParser.loadPDF(file)*/
-        text = text
-            .filter((x,i) => {
-                if(text[i+1] == 'indústria') return x
+        textArray = textArray
+            .filter((row,idx) => {
+                if(textArray[idx+1] == 'indústria') return row
             })
             .map( x => 
                 x.slice(x.lastIndexOf('-')+1)
                 .trim())
-        console.log(text)
+        console.log(textArray)
         //TextFilterService.proceed(text.slice(0,20))
         let d2 = `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}:${new Date().getMilliseconds()}`
 
