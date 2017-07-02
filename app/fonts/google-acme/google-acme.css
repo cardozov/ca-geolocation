@@ -1,0 +1,12 @@
+/* fallback */
+@font-face {
+  font-family: 'Acme';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Acme Regular'), local('Acme-Regular'), url(./Acme-Regular.ttf);
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+}
+.font-effect-wallpaper {
+  -webkit-mask-image: url(./wallpaper.png);
+  color: #42a5f5;
+}

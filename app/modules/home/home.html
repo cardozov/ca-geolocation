@@ -5,49 +5,58 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="./home.css" rel="stylesheet">
-        <link href="../../lib/google-icon/google-icon.css" rel="stylesheet">
+        <link href="../../fonts/google-icon/google-icon.css" rel="stylesheet">
+        <link href="../../fonts/google-acme/google-acme.css" rel="stylesheet">
         <link type="text/css" rel="stylesheet" href="../../../node_modules/materialize-css/dist/css/materialize.min.css" media="screen,projection"/>
 
     </head>
     <body class="container">
-        <div>
-            <h1>CA Geolocation </h1>
-            <a id="info-btn" class="btn-floating btn-large waves-effect waves-light z-depth-0 transparent">
-                <i class="material-icons left blue-text text-lighten-1">info_outline</i>
-            </a>
+        <div class="ca-container">
+            <div class="ca-header-container">
+                <div class="ca-brand">
+                    <h1 class="font-effect-wallpaper ca-brand-primary">CA</h1>
+                    <h1 class="font-effect-wallpaper ca-brand-secundary">Geolocation</h1>
+                </div>
+                <a id="info-btn" class="btn-floating btn-large waves-effect waves-light z-depth-0 transparent ca-info">
+                    <i class="material-icons left blue-text text-lighten-1">info_outline</i>
+                </a>
+            </div>
+
+            <div class="divider"></div>
+            
+            <div class="center-align row section">
+                <p class="flow-text">ONDE ESTÁ O PDF DE ÁREAS CONTAMINADAS DA CETESB?</p class>
+                <div class="ca-file-container">
+                    <input disabled type="text" id="upload-path">
+                    <a id="upload-btn" class="waves-effect waves-light btn light-blue lighten-3">
+                        <i class="material-icons left">attach_file</i>Selecionar
+                    </a>
+                </div>
+                <!-- Invisible --><input id="upload-input" name="upload-input" accept=".pdf" type="file">
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="center-align row section">
+                <p class="flow-text">ONDE QUER QUE OS ARQUIVOS DE SAÍDA FIQUEM?</p class>
+                <div class="ca-file-container">
+                    <input disabled type="text" id="export-path">
+                    <a id="export-btn" class="waves-effect waves-light btn light-blue lighten-3">
+                        <i class="material-icons left">note_add</i>Selecionar
+                    </a>
+                </div>
+                <!-- Invisible --><input id="export-input" name="export-input" webkitdirectory directory type="file">
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="right-align row section ca-btn-box-container">
+                <span class="flow-text ca-btn-label">TUDO PRONTO?</span>
+                <a id="start-btn" class="waves-effect waves-light btn-large right-align blue disabled">
+                    <i class="material-icons right">settings</i>Iniciar
+                </a>
+            </div>
         </div>
-
-        <div class="divider"></div>
-        
-        <div class="center-align row section">
-            <p class="flow-text">ONDE ESTÁ O PDF DE ÁREAS CONTAMINADAS DA CETESB?</p class>
-            <input disabled type="text" id="upload-path" class="ca-path-label">
-            <a id="upload-btn" class="waves-effect waves-light btn light-blue lighten-3">
-                <i class="material-icons left">attach_file</i>Selecionar
-            </a>
-            <!-- Invisible --><input id="upload-input" name="upload-input" accept=".pdf" type="file">
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="center-align row section">
-            <p class="flow-text">ONDE QUER QUE OS ARQUIVOS DE SAÍDA FIQUEM?</p class>
-            <input disabled type="text" id="export-path" class="ca-path-label">
-            <a id="export-btn" class="waves-effect waves-light btn light-blue lighten-3">
-                <i class="material-icons left">note_add</i>Selecionar
-            </a>
-            <!-- Invisible --><input id="export-input" name="export-input" webkitdirectory directory type="file">
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="right-align row section">
-            <span class="flow-text ca-btn-label">TUDO PRONTO?</span>
-            <a id="start-btn" class="waves-effect waves-light btn-large right-align blue disabled">
-                <i class="material-icons right">settings</i>Iniciar
-            </a>
-        </div>
-
     </body>
 
     <script src="./home.controller.js"></script>
