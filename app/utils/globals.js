@@ -8,6 +8,15 @@ module.exports = Global = {
         minHeight: 900,
         backgroundColor: Constants.BACKGROUND_COLOR
     },
+    infoConfig: {
+        height: 500,
+        width: 700,
+        minWidth: 400,
+        minHeight: 600,
+        backgroundColor: Constants.BACKGROUND_COLOR,
+        modal: true,
+        frame: false
+    },
     templateMenu: [
         {
             label: 'View',
@@ -37,7 +46,7 @@ module.exports = Global = {
                 {
                     label: 'Sobre o Alura Timer',
                     click: () => {
-                        ipcMain.emit('abrir-janela-sobre');
+                        ipcMain.emit('info-required');
                     },
                     accelerator: 'CmdOrCtrl+I'
                 }

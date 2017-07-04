@@ -13,6 +13,7 @@ let win = null
 let areasByCity
 let pdfPath
 let folderPath
+let infoWin = null
 
 //-------------- # Event Handling - Main Process
 app.on('ready', _onReady)
@@ -20,11 +21,9 @@ app.on('window-all-closed', _closeApp)
 
 //-------------- # Event Handling - Rendering Process
 ipcMain.on('start-process', _onStartProcess)
-ipcMain.on('filter-stop', areas => {
-    areasByCity = areas
-    //KMLService.createKML(areasByCity)
-    XLSService.createXLS(folderPath, areasByCity)
-})
+ipcMain.on('filter-stop', _onFilterStop)
+ipcMain.on('info-required', _onInfoRequired)
+ipcMain.on('close-info', _onCloseInfo)
 
 //-------------- # Private Functions
 function _onReady() {
@@ -63,6 +62,27 @@ function _onStartProcess(event, file, folder){
     folderPath = folder
     
     TextFilterService.proceed(file, folder, win)
+}
+
+function _onFilterStop(areas) {
+    areasByCity = areas
+    //KMLService.createKML(areasByCity)
+    XLSService.createXLS(folderPath, areasByCity)
+}
+
+function _onInfoRequired() {
+    if(infoWin == null){
+        infoWin = new BrowserWindow(Global.infoConfig)
+        infoWin.on('closed', () => {
+            infoWin = null
+        })
+    }
+    
+    infoWin.loadURL(`${__dirname}/${Constants.URL.INFO}`)
+}
+
+function _onCloseInfo() {
+    infoWin.close()
 }
 
 function _closeApp() {
