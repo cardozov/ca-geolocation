@@ -31,12 +31,16 @@ dropContainer.ondrop = _onDropContainerDrop
 
 //-------------- # Private Functions
 function _uploadCallback(data) {
-    uploadPath.value = file = data.files[0].path
+    if(data.files)
+        data = data.files[0]
+    uploadPath.value = file = data.path
     _validateRequirements()
 }
 
 function _exportCallback(data) {
-    exportPath.value = folder = data.files[0].path
+    if(data.files)
+        data = data.files[0]
+    exportPath.value = folder = data.path
     _validateRequirements()
 }
 
@@ -57,7 +61,7 @@ function _onInfoBtnClick(){
 function _onDropContainerDrop(event){
     event.preventDefault()
 
-    if(event.dataTransfer.files[0].type == 'application/pdf'){
+    /*if(event.dataTransfer.files[0].type == 'application/pdf'){
         _uploadCallback(event.dataTransfer)
         return false
     }
@@ -65,8 +69,45 @@ function _onDropContainerDrop(event){
     if(event.dataTransfer.files[0].type == '' && event.dataTransfer.files[0].name.split('.').length == 1){
        _exportCallback(event.dataTransfer)
        return false 
+    }*/
+
+    let data = event.dataTransfer
+    let folderList = _getFolderList(data.files)
+    let pdfList = _getPdfList(data.files)
+
+    if(!_isValidFileLists(folderList, pdfList, data.files.length)){
+        //DialogService.showConfirmModal()
+        console.log('errooooou')
+        return false
     }
-    
-    DialogService.showConfirmModal()
+
+    if(folderList.length == 1){
+        _exportCallback(folderList[0])
+    }
+
+    if(pdfList.length == 1){
+        _uploadCallback(pdfList[0])
+    }
+
     return false 
+}
+
+function _getFolderList(fileList) {
+    return Array.from(fileList).filter(file => {
+        if(file.type == '' && file.name.split('.').length == 1) 
+            return file
+    })
+}
+
+function _getPdfList(fileList) {
+    return Array.from(fileList).filter(file => {
+        if(file.type == 'application/pdf')
+            return file
+    })
+}
+
+function _isValidFileLists(folderList = [], pdfList = [], totalLen = -1) {
+    let pdfLen = pdfList.length
+    let folderLen = folderList.length
+    return (folderLen == 1 || folderLen == 0) && (pdfLen == 1 || pdfLen == 0) && (pdfLen + folderLen == totalLen)
 }
