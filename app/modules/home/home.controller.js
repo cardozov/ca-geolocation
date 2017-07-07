@@ -61,16 +61,6 @@ function _onInfoBtnClick(){
 function _onDropContainerDrop(event){
     event.preventDefault()
 
-    /*if(event.dataTransfer.files[0].type == 'application/pdf'){
-        _uploadCallback(event.dataTransfer)
-        return false
-    }
-
-    if(event.dataTransfer.files[0].type == '' && event.dataTransfer.files[0].name.split('.').length == 1){
-       _exportCallback(event.dataTransfer)
-       return false 
-    }*/
-
     let data = event.dataTransfer
     let folderList = _getFolderList(data.files)
     let pdfList = _getPdfList(data.files)
