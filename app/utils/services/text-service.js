@@ -2,6 +2,8 @@
 //-------------- # Module Imports
 const {app, ipcMain} = require('electron')
 const fs = require("fs")
+const epsg = require('epsg')
+const proj4 = require('proj4')
 require('pdfjs-dist')
 
 //-------------- # Variables and Properties
@@ -30,21 +32,7 @@ class GeometricCalculator {
     constructor(){}
 
     static convertToWGS84(obj){
-        
-        switch(obj.datum){
-            case 'SAD69':
-                return _convert_SAD69_To_WGS84(obj)
-                break
-            case 'SIRGAS2000':
-                return _convert_SIRGAS2000_To_WGS84(obj)
-                break
-            case 'Córrego Alegre':
-                return _convert_CORREGOALEGRE_To_WGS84(obj)
-                break
-            default :
-                console.log(obj)
-                return {}
-        }
+        return _convertToWGS84(obj.datum, obj.fuso, obj.utm_e, obj.utm_n)
     }
 }
 
@@ -74,6 +62,15 @@ function _formatPageContent(content) {
     let filter = {}
 
     str.forEach((row, idx) => {
+        if(str[idx+2] == 'indústria')
+            filter.name = str.slice(2,idx+1)
+                             .reduce((x,y) => x+y)
+                             .replace('&','&amp;')
+                             .replace('<','&lt;')
+                             .replace('>','&gt;')
+                             .replace('\'','&apos;')
+                             .replace('\"','&quot;')
+        
         if(str[idx+1] == 'indústria')
             filter.city = row.slice(row.lastIndexOf('-')+1).trim()
         if(row == 'fuso')
@@ -86,11 +83,17 @@ function _formatPageContent(content) {
             filter.datum = str[idx+1]
     })
 
-    if(filter.datum != 'WGS84')
-        filter = GeometricCalculator.convertToWGS84(filter)
+    if(filter.datum == "Córrego Alegre")
+        filter.datum = "CORREGO_ALEGRE"
+
+    const latLon = GeometricCalculator.convertToWGS84(filter)
+    filter.latitude = latLon.y
+    filter.longitude = latLon.x
     
-    if(!areasByCity[filter.city])
+    if(!areasByCity[filter.city]){
         areasByCity[filter.city] = []
+        filter.name = filter.name.replace(`${filter.city}`,"")
+    }
 
     areasByCity[filter.city].push(filter)
 }
@@ -99,18 +102,24 @@ function _pdfErrorHandler(err) {
     ipcMain.emit('pdf-reading-error')
 }
 
-function _convert_SAD69_To_WGS84(obj) {
-    return obj
+function _convertToWGS84(datum, fuso, lat, lon) {
+    let datumIdx = Constants.DATUM[`${datum}_${fuso}_S`]
+    
+
+    let a = new proj4.Proj('WGS84')
+    let b = new proj4.Proj(epsg[datumIdx])    
+
+    let point = new proj4.toPoint(_formatGeodesicPoint(lat, lon));
+
+    return proj4(b, a, point);
 }
 
-function _convert_SIRGAS2000_To_WGS84(obj) {
-    return obj
-}
+function _formatGeodesicPoint(lat, lon) {
+    lat = lat.replace('.','').replace(',','.')
+    lon = lon.replace('.','').replace('.','').replace(',','.')
 
-function _convert_CORREGOALEGRE_To_WGS84(obj) {
-    return obj
+    return [lat, lon]
 }
-
 
 //-------------- # Export Object
 module.exports = {

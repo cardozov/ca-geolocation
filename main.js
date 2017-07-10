@@ -66,7 +66,7 @@ function _onStartProcess(event, file, folder){
 
 function _onFilterStop(areas) {
     areasByCity = areas
-    //KMLService.createKML(areasByCity)
+    KMLService.createKML(folderPath, areasByCity)
     XLSService.createXLS(folderPath, areasByCity)
 }
 
