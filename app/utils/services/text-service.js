@@ -9,6 +9,7 @@ require('pdfjs-dist')
 //-------------- # Variables and Properties
 let win = null
 let areasByCity = {}
+let isGrey = true
 
 //-------------- # Exporting Modules
 class TextFilterService {
@@ -82,6 +83,9 @@ function _formatPageContent(content) {
         if(row == 'DATUM')
             filter.datum = str[idx+1]
     })
+
+    filter.isGrey = isGrey
+    isGrey = !isGrey
 
     if(filter.datum == "Córrego Alegre")
         filter.datum = "CORREGO_ALEGRE"
