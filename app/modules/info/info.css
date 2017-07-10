@@ -114,3 +114,9 @@ li ol,  li ul {
 ol ol li:last-child {
     margin-bottom:0;
 }
+
+.ca-emoji {
+    margin-bottom: -5px;
+    height: 30px;
+    width: 30px;
+}
