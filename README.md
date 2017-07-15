@@ -15,11 +15,11 @@ Aplicação Modular com Electron estruturada semanticamente em áreas
 
 ## Mecanismos de controle e qualidade
 
-[Guidelines Mecanismos de controle e qualidade](https://docs.google.com/a/medgrupo.com.br/document/d/1bILLkbjKtbnS9xbH9S27zD_F5FsQUbVb1V1btwDqCKg/edit?usp=sharing "Mecanismos de controle e qualidade")
+[Guidelines Mecanismos de controle e qualidade](https://docs.google.com/document/d/14MFQKZwa-qQnMdY0arblNNj09DNmeO7f8lxidmEX-o4/edit?usp=sharing "Mecanismos de controle e qualidade")
 
 ## Workflow Git
 
-[Guidelines  Workflow Git](https://docs.google.com/a/medgrupo.com.br/document/d/1m2dMAIeoEIfow70hEDMqGHxD5WFN-0n8LeeE6DXEsOY/edit?usp=sharing "Guia Workflow Git")
+[Guidelines  Workflow Git](https://docs.google.com/document/d/10CCjqRoMT5H3ZcUOqaCq1dWkmrvHtEHi1FjdvTD1A_c/edit?usp=sharing "Guia Workflow Git")
 
 ## Build do projeto
 
@@ -27,5 +27,15 @@ Aplicação Modular com Electron estruturada semanticamente em áreas
 2. npm install
 3. npm start
 
+## Export/Publish do projeto
+
+### Para uma plataforma (Windows)
+1. Adicionar um icone .png no **mesmo nível** da pasta do projeto
+2. Executar o comando no **mesmo nível** da pasta do projeto ```electron-packager ./ca-geolocation/ ca-geolocation --platform=win32 --arch=x64 --icon=./icon.png```
+
+### Para todas as plataformas
+1. Converter um icone base (png) [neste site](https://iconverticons.com/online/)
+2. Criar uma pasta com todas as extensões de icones (todos com o mesmo nome) no **mesmo nível** da pasta do projeto
+3. Executar o comando no **mesmo nível** da pasta do projeto ```electron-packager ./ca-geolocation/ ca-geolocation --platform=all --arch=x64 --icon=./icons/icon```
 
  **Desenv 2017** Corcurex
