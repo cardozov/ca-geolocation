@@ -79,6 +79,8 @@ function _onInfoRequired() {
     }
     
     infoWin.loadURL(`${__dirname}/${Constants.URL.INFO}`)
+
+    infoWin.setAlwaysOnTop(true, 'screen');
 }
 
 function _onCloseInfo() {

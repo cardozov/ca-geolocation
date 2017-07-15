@@ -1,9 +1,16 @@
+body {
+    -webkit-app-region: drag;
+    overflow: auto;
+}
+
 p {
     margin: 0.5em 0;
     line-height: 1.2em;
 }
 
 .ca-close-container {
+    width: 100px;
+    height: 100px;
     position: fixed;
     right: 30px;
     top: 30px;
