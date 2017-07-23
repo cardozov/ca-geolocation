@@ -9,66 +9,74 @@
         <link href="../../fonts/google-acme/google-acme.css" rel="stylesheet">
         <link type="text/css" rel="stylesheet" href="../../../node_modules/materialize-css/dist/css/materialize.min.css" media="screen,projection"/>
     </head>
-    <body class="container">
+    <body>
+        <div class="container">
+            <div class="ca-move-container">
+                <div class="ca-close-container">
+                    <a href="#" onclick="closeWindow()" class="btn-floating btn-large z-depth-0 transparent">
+                        <i class="material-icons ca-close-icon">add</i>
+                    </a>
+                </div>
 
-        <div class="ca-close-container">
-            <a href="#" onclick="closeWindow()" class="btn-floating btn-large z-depth-0 transparent">
-                <i class="material-icons ca-close-icon">add</i>
-            </a>
-        </div>
-
-        <div class="typewriter">
-            <h1>Sobre nós.</h1>
-        </div>
-        
-        <div class="top-divider"></div>
-        <div>
-            <div class="ca-brand-container">
-                O que é o
-                <span class="font-effect-wallpaper ca-brand-primary">CA</span>
-                <span class="font-effect-wallpaper ca-brand-secundary">Geolocation</span>
-                :
+                <div class="typewriter">
+                    <h1>Sobre nós.</h1>
+                </div>
             </div>
-            <p class="flow-text">Sabe aquele PDF<span class="text-scratched"> gigante </span> de Áreas Contaminadas e Reabilitadas do Estado de São Paulo que a CETESB disponibiliza todo ano?</p>
-            <p class="flow-text">Então, nós processamos ele para você e transformamos as quase 6000 páginas em uma pasta cheia de arquivos bem legais, prontos para serem lidos pelo Google Earth.</p>
-            <p class="flow-text">Nós também pensamos em aproveitar seus conhecimentos de ninja no Excel e criamos uma planilha muito útil, com todas as áreas listadas no PDF e as informações importantes.</p>
-            <p class="flow-text"><i>Legal, não é?!</i></p>
-        </div>
-        
-        <div class="divider"></div>
-        <div>
-            <div class="ca-brand-container">
-                Como utilizar o
-                <span class="font-effect-wallpaper ca-brand-primary">CA</span>
-                <span class="font-effect-wallpaper ca-brand-secundary">Geolocation</span>
-                :
+            
+            <div class="top-divider"></div>
+            <div>
+                <div class="ca-brand-container">
+                    O que é o
+                    <span class="font-effect-wallpaper ca-brand-primary">CA</span>
+                    <span class="font-effect-wallpaper ca-brand-secundary">Geolocation</span>
+                    :
+                </div>
+                <p class="flow-text">Sabe aquele PDF<span class="text-scratched"> gigante </span> de Áreas Contaminadas e Reabilitadas do Estado de São Paulo que a CETESB disponibiliza todo ano?</p>
+                <p class="flow-text">Então, nós processamos ele para você e transformamos as quase 6000 páginas em uma pasta cheia de arquivos bem legais, prontos para serem lidos pelo Google Earth.</p>
+                <p class="flow-text">Nós também pensamos em aproveitar seus conhecimentos de ninja no Excel e criamos uma planilha muito útil, com todas as áreas listadas no PDF e as informações importantes.</p>
+                <p class="flow-text"><i>Legal, não é?!</i></p>
             </div>
-            <p class="flow-text">Quer saber como utilizar o CA Geolocation? É muito símples, basta seguir os passos abaixo e aproveitar a ferramenta.</p>
-            <ol>
-                <li>
-                    <p class="flow-text">Escolha o arquivo PDF que você previamente baixou do site da CETESB.</p>
-                    <p class="flow-text">Ainda não tem o arquivo? Tudo bem, deixamos ele referenciado
-                        <a href="#" onclick="openExternal()">AQUI</a>
-                    </p></li>
-                <li>
-                    <p class="flow-text">Escolha onde quer que seus arquivos KML (arquivos que o Google Earth sabe ler) e a planílha eletrônica fiquem</p>
-                </li>
-                <li>
-                    <p class="flow-text">Clique em INICIAR e espere a magia acontecer! <img src="../../img/sunglasses.png" class="ca-emoji" alt="sunglass"/></p>
-                </li>
-            </ol>
-            <p class="flow-text"><i>Bem fácil, não?</i></p>
+            
+            <div class="divider"></div>
+            <div>
+                <div class="ca-brand-container">
+                    Como utilizar o
+                    <span class="font-effect-wallpaper ca-brand-primary">CA</span>
+                    <span class="font-effect-wallpaper ca-brand-secundary">Geolocation</span>
+                    :
+                </div>
+                <p class="flow-text">Quer saber como utilizar o CA Geolocation? É muito símples, basta seguir os passos abaixo e aproveitar a ferramenta.</p>
+                <ol>
+                    <li>
+                        <p class="flow-text">Escolha o arquivo PDF que você previamente baixou do site da CETESB.</p>
+                        <p class="flow-text">Ainda não tem o arquivo? Tudo bem, deixamos ele referenciado
+                            <a href="#" onclick="openExternal()">AQUI</a>
+                        </p></li>
+                    <li>
+                        <p class="flow-text">Escolha onde quer que seus arquivos KML (arquivos que o Google Earth sabe ler) e a planílha eletrônica fiquem</p>
+                    </li>
+                    <li>
+                        <p class="flow-text">Clique em INICIAR e espere a magia acontecer! <img src="../../img/sunglasses.png" class="ca-emoji" alt="sunglass"/></p>
+                    </li>
+                </ol>
+                <p class="flow-text"><i>Bem fácil, não?</i></p>
+            </div>
+            
+            <div class="divider"></div>
+            <div>
+                <p class="flow-text">Recomendamos que realize o processo após ter fechado todos os outros aplicativos de seu computador.</p>
+                <p class="flow-text">Pode ser bem desgastante para ele ler todas essas páginas <img src="../../img/sweat_smile.png" class="ca-emoji" alt="sweet"/></p>
+            </div>
+
         </div>
         
-        <div class="divider"></div>
-        <div>
-            <p class="flow-text">Recomendamos que realize o processo após ter fechado todos os outros aplicativos de seu computador.</p>
-            <p class="flow-text">Pode ser bem desgastante para ele ler todas essas páginas <img src="../../img/sweat_smile.png" class="ca-emoji" alt="sweet"/></p>
-        </div>
-
-        <div class="divider"></div>
-        <footer>
-
+        <footer class="page-footer">
+            <div class="footer-copyright">
+                <div class="container">
+                    Desenvolvido por Vinicius Goulart Cardozo
+                    <span class="grey-text text-lighten-4 right">© 2017 Copyright</span>
+                </div>
+            </div>
         </footer>
     </body>
 
