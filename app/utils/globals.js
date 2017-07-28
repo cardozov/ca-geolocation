@@ -1,4 +1,5 @@
 const Constants = require('./constants.js')
+const {ipcMain} = require('electron')
 
 module.exports = Global = {
     windowConfig: {
@@ -9,33 +10,43 @@ module.exports = Global = {
         backgroundColor: Constants.BACKGROUND_COLOR
     },
     infoConfig: {
-        height: 500,
-        width: 700,
-        minWidth: 400,
-        minHeight: 600,
+        height: 800,
+        width: 900,
+        minWidth: 600,
+        minHeight: 700,
         backgroundColor: Constants.BACKGROUND_COLOR,
         modal: true,
         frame: false
     },
     templateMenu: [
         {
-            label: 'View',
+            label: 'CA Geolocation',
             submenu: [{
-                role: 'reload'
-            },
-            {
-                role: 'toggledevtools'
-                }
+                    label: 'Escolher PDF de Entrada',
+                    click: () => {
+                        ipcMain.emit('input-short')
+                    },
+                    accelerator: 'CmdOrCtrl+E'
+                },
+                {
+                    label: 'Escolher Pasta Destino',
+                    click: () => {
+                        ipcMain.emit('output-short')
+                    },
+                    accelerator: 'CmdOrCtrl+S'
+                } 
             ]
         },
         {
-            label: 'Window',
+            label: 'Janela',
             submenu: [
                 {
+                    label: 'Minimizar',
                     role: 'minimize',
                     accelerator: 'CmdOrCtrl+M'
                 },
                 {
+                    label: 'Fechar',
                     role: 'close'
                 }
             ]
@@ -44,9 +55,9 @@ module.exports = Global = {
             label: 'Sobre',
             submenu: [
                 {
-                    label: 'Sobre o Alura Timer',
+                    label: 'Sobre o CA Geolocation',
                     click: () => {
-                        ipcMain.emit('info-required');
+                        ipcMain.emit('info-required')
                     },
                     accelerator: 'CmdOrCtrl+I'
                 }

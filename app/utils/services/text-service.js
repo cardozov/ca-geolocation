@@ -18,13 +18,14 @@ class TextFilterService {
 
     static proceed(filePath, folderPath, wind){
         win = wind
-
+        
         let data = new Uint8Array(fs.readFileSync(filePath))
         PDFJS.getDocument(data)
         .then(doc => {
             let max = doc.numPages
             _formatByPage(doc, 1, max, _formatPageContent)
         })
+        .catch(err => ipcMain.emit('process-error',err))
     }
 }
 
@@ -53,7 +54,9 @@ function _formatByPage(doc, idx, max, callback) {
             
             _formatByPage(doc, idx+1, max, callback)
         })
+        .catch(err => ipcMain.emit('process-error',err))
     })
+    .catch(err => ipcMain.emit('process-error',err))
     
 }
 

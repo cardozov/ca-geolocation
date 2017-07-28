@@ -14,6 +14,8 @@ let areasByCity
 let pdfPath
 let folderPath
 let infoWin = null
+let startSender = null
+let loadSender = null
 
 //-------------- # Event Handling - Main Process
 app.on('ready', _onReady)
@@ -21,9 +23,13 @@ app.on('window-all-closed', _closeApp)
 
 //-------------- # Event Handling - Rendering Process
 ipcMain.on('start-process', _onStartProcess)
+ipcMain.on('process-error', _onProcessError)
 ipcMain.on('filter-stop', _onFilterStop)
 ipcMain.on('info-required', _onInfoRequired)
 ipcMain.on('close-info', _onCloseInfo)
+ipcMain.on('load-sender', _onLoadSender)
+ipcMain.on('input-short', _onInputShort)
+ipcMain.on('output-short', _onOutputShort)
 
 //-------------- # Private Functions
 function _onReady() {
@@ -52,26 +58,47 @@ function _menuTemplateHandler(){
 
     //Atalhos globais da aplicação
     globalShortcut.register('CmdOrCtrl+Shift+A', () => {
-        win.send('atalho-upload');
+        win.send('test');
     });
 }
 
 function _onStartProcess(event, file, folder){
     console.log(`file: ${file}\nfolder: ${folder}`)
+    startSender = event
     pdfPath = file
     folderPath = folder
     
     TextFilterService.proceed(file, folder, win)
 }
 
+function _onProcessError(err) {
+    startSender.sender.send('process-error', JSON.stringify({
+        message: err.message,
+        name: err.name,
+        stack: err.stack
+    }))
+}
+
 function _onFilterStop(areas) {
     areasByCity = areas
+    folderPath = _createRootFolder(folderPath)
     KMLService.createKML(folderPath, areasByCity)
     XLSService.createXLS(folderPath, areasByCity)
+    startSender.sender.send('filter-stop')
+}
+
+function _createRootFolder(folderPath) {
+    let dir = folderPath + '\\Arquivos CA Geolocation'
+
+    if (!fs.existsSync(dir))
+        fs.mkdirSync(dir)
+
+    return dir
 }
 
 function _onInfoRequired() {
     if(infoWin == null){
+        Global.infoConfig.parent = win
         infoWin = new BrowserWindow(Global.infoConfig)
         infoWin.on('closed', () => {
             infoWin = null
@@ -79,6 +106,18 @@ function _onInfoRequired() {
     }
     
     infoWin.loadURL(`${__dirname}/${Constants.URL.INFO}`)
+}
+
+function _onLoadSender(event) {
+    loadSender = event.sender
+}
+
+function _onInputShort() {
+    loadSender.send('input-short')
+}
+
+function _onOutputShort() {
+    loadSender.send('output-short')
 }
 
 function _onCloseInfo() {

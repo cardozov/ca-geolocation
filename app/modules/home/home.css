@@ -14,6 +14,14 @@ input[type=file] {
   position: fixed;
 }
 
+.ca-logo {
+  width: 7em;
+  position: relative;
+  margin-top: 3.5em !important;
+  padding-right: 1em;
+  opacity: .6;
+}
+
 .ca-header-container {
   display: flex;
   align-items: center;

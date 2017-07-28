@@ -3,12 +3,19 @@ p {
     line-height: 1.2em;
 }
 
+.ca-move-container {
+    -webkit-app-region: drag;
+    overflow: auto;
+}
+
 .ca-close-container {
     position: fixed;
     right: 30px;
     top: 30px;
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
+    z-index: 99;
+    -webkit-app-region: no-drag !important;
 }
 
 .ca-close-icon {
@@ -119,4 +126,13 @@ ol ol li:last-child {
     margin-bottom: -5px;
     height: 30px;
     width: 30px;
+}
+
+.page-footer {
+    margin-top: 50px;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    margin: none;
+    background-color: cornflowerblue !important;
 }
