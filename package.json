@@ -22,8 +22,9 @@
   "author": "Vinicius Goulart Cardozo <vinicius.gcardozo@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "electron": "^1.7.1",
+    "electron": "^1.7.5",
     "epsg": "^0.3.0",
+    "getmac": "^1.2.1",
     "materialize-css": "^0.99.0",
     "pdfjs-dist": "^1.8.492",
     "proj4": "^2.4.3"

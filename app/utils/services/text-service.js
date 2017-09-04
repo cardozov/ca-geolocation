@@ -76,7 +76,7 @@ function _formatPageContent(content) {
                              .replace('\"','&quot;')
         
         if(str[idx+1] == 'indústria')
-            filter.city = row.slice(row.lastIndexOf('-')+1).trim()
+            filter.city = row.slice(row.lastIndexOf('- ')+1).trim()
         if(row == 'fuso')
             filter.fuso = str[idx+1]
         if(row == 'UTM_E')
@@ -122,8 +122,8 @@ function _convertToWGS84(datum, fuso, lat, lon) {
 }
 
 function _formatGeodesicPoint(lat, lon) {
-    lat = lat.replace('.','').replace(',','.')
-    lon = lon.replace('.','').replace('.','').replace(',','.')
+    lat = parseFloat(lat.replace('.','').replace(',','.'))
+    lon = parseFloat(lon.replace('.','').replace('.','').replace(',','.'))
 
     return [lat, lon]
 }

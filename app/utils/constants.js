@@ -14,6 +14,13 @@ module.exports = Constants = {
         SUCCESS: ''
     },
 
+    HTTP: {
+        SERVER: 'https://ca-api.herokuapp.com/',
+        // SERVER: 'http://localhost:3000/',
+        GET_ACCESS:'app/access/',
+        POST_KEY:'app/key/'
+    },
+
     DATUM: {
         CORREGO_ALEGRE:"EPSG:4225",
         SAD69:"EPSG:4618",
