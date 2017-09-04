@@ -5,7 +5,9 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \nTests not implemented.",
-    "start": "electron ."
+    "start": "electron .",
+    "package-win": "electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --icon=app/img/ca-logo.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"CA Geolocation\"",
+    "create-win": "node installers/windows/createinstaller.js"
   },
   "keywords": [
     "Contaminated",
@@ -23,6 +25,8 @@
   "license": "MIT",
   "dependencies": {
     "electron": "^1.7.5",
+    "electron-packager": "^9.0.1",
+    "electron-winstaller": "^2.6.3",
     "epsg": "^0.3.0",
     "getmac": "^1.2.1",
     "materialize-css": "^0.99.0",
