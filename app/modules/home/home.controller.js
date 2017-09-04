@@ -159,30 +159,23 @@ function _onOutputShort() {
 
 function verifyUser(number){
     _notifyStartingApp()
-    LocalStorageService
-    .get('key')
-    .then(key => {
-        _clearStartingModal()
+
+    HttpService.getAccess()
+    .then(data => {
+        if(data.result){
+            LocalStorageService.set('key', data.key)
+            _clearStartingModal()
+        }
+        else
+            _requireAccessKey()
     })
     .catch(err => {
-        HttpService
-        .getAccess()
-        .then(data => {
-            if(data.result){
-                LocalStorageService.set('key', data.key)
-                _clearStartingModal()
-            }
-            else
-                _requireAccessKey()
-        })
-        .catch(err => {
-            if(number >= 3){
-                console.log(err)
-                _notifyProblem()
-            }
-            else
-                verifyUser(number+1)
-        })
+        if(number >= 3){
+            console.log(err)
+            _notifyProblem()
+        }
+        else
+            verifyUser(number+1)
     })
 }
 
@@ -237,10 +230,8 @@ function _validateKey(key){
                 showLoaderOnConfirm: true
             }, 
             _validateKey)
-        else{
-            LocalStorageService.set('key',key)
+        else
             swal("Pronto!", `A chave ${key} foi validada e agora você pode usar o CA Geolocation livremente :D`)
-        }
     })
     .catch(err => {
         swal({
