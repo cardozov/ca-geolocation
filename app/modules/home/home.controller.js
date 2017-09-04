@@ -1,14 +1,12 @@
 
-document.addEventListener('DOMContentLoaded',() => {
-    InputFileService.createInputTrigger(uploadComponent, uploadBtn, _uploadCallback)
-    InputFileService.createInputTrigger(exportComponent, exportBtn, _exportCallback)
-    ipcRenderer.send('load-sender')
-
-})
+//-------------- # Initial
+document.addEventListener('DOMContentLoaded',() => _init())
 
 //-------------- # Module Imports
 const { shell, ipcRenderer } = require('electron')
 const InputFileService = require('../../utils/services/input-file-service.js')
+const LocalStorageService = require('../../utils/services/local-storage-service.js')
+const HttpService = require('../../utils/services/http-service.js')
 
 //-------------- # Variables and Properts
 let uploadComponent  = document.querySelector( "#upload-input" )  
@@ -37,6 +35,13 @@ ipcRenderer.on('test', () => {/*DO SOMETHING*/})
 ipcRenderer.on('process-error', _onProcessError)
 
 //-------------- # Private Functions
+function _init(){
+    InputFileService.createInputTrigger(uploadComponent, uploadBtn, _uploadCallback)
+    InputFileService.createInputTrigger(exportComponent, exportBtn, _exportCallback)
+    ipcRenderer.send('load-sender')
+    verifyUser(0)
+}
+
 function _uploadCallback(data) {
     if(data.files)
         data = data.files[0]
@@ -150,6 +155,106 @@ function _onInputShort() {
 
 function _onOutputShort() {
     exportBtn.click()
+}
+
+function verifyUser(number){
+    _notifyStartingApp()
+    LocalStorageService
+    .get('key')
+    .then(key => {
+        _clearStartingModal()
+    })
+    .catch(err => {
+        HttpService
+        .getAccess()
+        .then(data => {
+            if(data.result){
+                LocalStorageService.set('key', data.key)
+                _clearStartingModal()
+            }
+            else
+                _requireAccessKey()
+        })
+        .catch(err => {
+            if(number >= 3){
+                console.log(err)
+                _notifyProblem()
+            }
+            else
+                verifyUser(number+1)
+        })
+    })
+}
+
+function _notifyStartingApp() {
+    swal({
+        title: "Aguarde um minuto...",
+        text: `Estou preparando a inicialização do CA Geolocation`,
+        showConfirmButton: false,
+        type: "info",
+        html:true
+    })
+}
+
+function _clearStartingModal() {
+    swal.close()
+}
+
+function _requireAccessKey() {
+    swal({
+            title: "Autenticação",
+            text: "Por favor, informe sua chave de validação do CA Geolocation:",
+            type: "input",
+            showCancelButton: false,
+            closeOnConfirm: false,
+            animation: "slide-from-top",
+            inputPlaceholder: "Insira a chave do produto",
+            showLoaderOnConfirm: true
+        }, 
+        _validateKey
+    )
+}
+
+function _validateKey(key){
+    if (key === false) return false;
+
+    if (key === "") {
+        swal.showInputError("É obrigatório informar a chave de validação")
+        return false
+    }
+
+    HttpService.postKey(key)
+    .then(data => {
+        if(data.message)
+            swal({
+                title: "Oooops!",
+                text: data.message,
+                type: "input",
+                showCancelButton: false,
+                closeOnConfirm: false,
+                animation: "slide-from-top",
+                inputPlaceholder: "Insira a chave do produto",
+                showLoaderOnConfirm: true
+            }, 
+            _validateKey)
+        else{
+            LocalStorageService.set('key',key)
+            swal("Pronto!", `A chave ${key} foi validada e agora você pode usar o CA Geolocation livremente :D`)
+        }
+    })
+    .catch(err => {
+        swal({
+            title: "Oooops!",
+            text: "Esta chave é inválida ou já está em uso, por favor, insira uma chave válida",
+            type: "input",
+            showCancelButton: false,
+            closeOnConfirm: false,
+            animation: "slide-from-top",
+            inputPlaceholder: "Insira a chave do produto",
+            showLoaderOnConfirm: true
+        }, 
+        _validateKey)
+    })
 }
 
 function _onProcessError(event, err) {
