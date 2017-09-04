@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded',() => _init())
 //-------------- # Module Imports
 const { shell, ipcRenderer } = require('electron')
 const InputFileService = require('../../utils/services/input-file-service.js')
-const LocalStorageService = require('../../utils/services/local-storage-service.js')
 const HttpService = require('../../utils/services/http-service.js')
 
 //-------------- # Variables and Properts
@@ -163,7 +162,6 @@ function verifyUser(number){
     HttpService.getAccess()
     .then(data => {
         if(data.result){
-            LocalStorageService.set('key', data.key)
             _clearStartingModal()
         }
         else
