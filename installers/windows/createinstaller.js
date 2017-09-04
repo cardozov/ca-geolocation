@@ -19,7 +19,7 @@ function getInstallerConfig () {
        noMsi: true,
        outputDirectory: path.join(outPath, 'windows-installer'),
        exe: 'ca-geolocation.exe',
-       setupExe: 'ca-geolocation.exe',
+       setupExe: 'CA Geolocation.exe',
        setupIcon: path.join(rootPath, 'app', 'img', 'ca-logo.ico')
    })
 }
