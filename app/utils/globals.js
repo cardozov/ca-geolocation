@@ -48,6 +48,10 @@ module.exports = Global = {
                 {
                     label: 'Fechar',
                     role: 'close'
+                },
+                {
+                    label: 'Dev',
+                    role: 'toggledevtools'
                 }
             ]
         },

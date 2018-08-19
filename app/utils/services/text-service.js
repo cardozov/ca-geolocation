@@ -10,6 +10,7 @@ require('pdfjs-dist')
 let win = null
 let areasByCity = {}
 let isGrey = true
+let isFilteringName = false
 
 //-------------- # Exporting Modules
 class TextFilterService {
@@ -44,17 +45,16 @@ function _formatByPage(doc, idx, max, callback) {
     doc.getPage(idx)
     .then(page => {
         page.getTextContent()
-        .then(content => {
-            _formatPageContent(content)
+    })
+    .then(content => {
+        _formatPageContent(content)
 
-            if(idx >= max){
-                ipcMain.emit('filter-stop', areasByCity)
-                return
-            }
-            
-            _formatByPage(doc, idx+1, max, callback)
-        })
-        .catch(err => ipcMain.emit('process-error',err))
+        if(idx >= max){
+            ipcMain.emit('filter-stop', areasByCity)
+            return
+        }
+        
+        _formatByPage(doc, idx+1, max, callback)
     })
     .catch(err => ipcMain.emit('process-error',err))
     
@@ -63,46 +63,63 @@ function _formatByPage(doc, idx, max, callback) {
 function _formatPageContent(content) {
     let str = content.items.map(item => item.str)
 
-    let filter = {}
-
-    str.forEach((row, idx) => {
-        if(str[idx+2] == 'indústria')
-            filter.name = str.slice(2,idx+1)
-                             .reduce((x,y) => x+y)
-                             .replace('&','&amp;')
-                             .replace('<','&lt;')
-                             .replace('>','&gt;')
-                             .replace('\'','&apos;')
-                             .replace('\"','&quot;')
-        
-        if(str[idx+1] == 'indústria')
-            filter.city = row.slice(row.lastIndexOf('- ')+1).trim()
-        if(row == 'fuso')
-            filter.fuso = str[idx+1]
-        if(row == 'UTM_E')
-            filter.utm_e = str[idx+1]
-        if(row == 'UTM_N')
-            filter.utm_n = str[idx+1]
-        if(row == 'DATUM')
-            filter.datum = str[idx+1]
-    })
-
-    filter.isGrey = isGrey
-    isGrey = !isGrey
-
-    if(filter.datum == "Córrego Alegre")
-        filter.datum = "CORREGO_ALEGRE"
-
-    const latLon = GeometricCalculator.convertToWGS84(filter)
-    filter.latitude = latLon.y
-    filter.longitude = latLon.x
+    _resolveStr(str)
+    .then(filter => {
+        filter.isGrey = isGrey
+        isGrey = !isGrey
     
-    if(!areasByCity[filter.city]){
-        areasByCity[filter.city] = []
-        filter.name = filter.name.replace(`${filter.city}`,"")
-    }
+        if(filter.datum == "Córrego Alegre")
+            filter.datum = "CORREGO_ALEGRE"
+    
+        const latLon = GeometricCalculator.convertToWGS84(filter)
+        filter.latitude = latLon.y
+        filter.longitude = latLon.x
+        
+        if(!areasByCity[filter.city]){
+            areasByCity[filter.city] = []
+            while(isFilteringName){}
+            filter.name = filter.name.replace(`${filter.city}`,"")
+        }
+    
+        areasByCity[filter.city].push(filter)
+    })
+}
 
-    areasByCity[filter.city].push(filter)
+function _resolveStr(str) {
+    return new Promise((resolve, reject) => {
+        let filter = {}
+        str.forEach((row, idx) => {
+            // if(str.name.indexOf("EAST SIDE CONDOMÍNIO") > 0)
+            //     debugger
+            if(str[idx+2] == 'indústria'){
+                filter.name = str.slice(2,idx+1).reduce((x,y) => x+y)
+                [   
+                    {char: "&",  alias: "&amp;" },
+                    {char: "<",  alias: "&lt;"  },
+                    {char: ">",  alias: "&gt;" },
+                    {char: "\'", alias: "&apos;"},
+                    {char: "\"", alias: "&quot;"}
+                ].forEach(item => {
+                    while (filter.name.indexOf(item.char) > 0) {
+                        filter.name = filter.name.replace(item.char, item.alias)
+                    }
+                })
+            }
+            
+            if(str[idx+1] == 'indústria')
+                filter.city = row.slice(row.lastIndexOf('- ')+1).trim()
+            if(row == 'fuso')
+                filter.fuso = str[idx+1]
+            if(row == 'UTM_E')
+                filter.utm_e = str[idx+1]
+            if(row == 'UTM_N')
+                filter.utm_n = str[idx+1]
+            if(row == 'DATUM')
+                filter.datum = str[idx+1]
+        }, data => {
+            resolve(filter)
+        })
+    })
 }
 
 function _pdfErrorHandler(err) {
