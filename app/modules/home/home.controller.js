@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded',() => _init())
 const { shell, ipcRenderer } = require('electron')
 const InputFileService = require('../../utils/services/input-file-service.js')
 const HttpService = require('../../utils/services/http-service.js')
+const constants = require('../../utils/constants.js')
 
 //-------------- # Variables and Properts
 let uploadComponent  = document.querySelector( "#upload-input" )  
@@ -187,6 +188,16 @@ function _notifyStartingApp() {
     })
 }
 
+function _notifyProblem() {
+    swal({
+        title: "Algum erro inesperado ocorreu!",
+        text: `Peço desculpas, estou tentando lidar com esse problema. Pode tentar abrir o CA Geolocation mais tarde?`,
+        showConfirmButton: false,
+        type: "warning",
+        html:true
+    })
+}
+
 function _clearStartingModal() {
     swal.close()
 }
@@ -265,5 +276,5 @@ function _onProcessError(event, err) {
 }
 
 function _openExternal() {
-    shell.openExternal('http://areascontaminadas.cetesb.sp.gov.br/relacao-de-areas-contaminadas/')
+    shell.openExternal(constants.URL.PDF_REFERENCES)
 }

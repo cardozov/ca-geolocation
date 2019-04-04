@@ -2,7 +2,7 @@ module.exports = Constants = {
     URL: {
         HOME: 'app/modules/home/home.html',
         INFO: 'app/modules/info/info.html',
-        PDF_REFERENCES: 'https://www.google.com.br'
+        PDF_REFERENCES: 'http://areascontaminadas.cetesb.sp.gov.br/relacao-de-areas-contaminadas/'
     },
     
     BACKGROUND_COLOR: '#e8eaf6',
@@ -18,7 +18,7 @@ module.exports = Constants = {
         SERVER: 'https://ca-api.herokuapp.com/',
         // SERVER: 'http://localhost:3000/',
         GET_ACCESS:'app/access/',
-        POST_KEY:'app/key/'
+        POST_KEY:'app/access/'
     },
 
     DATUM: {
