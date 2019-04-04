@@ -2,7 +2,7 @@ module.exports = Constants = {
     URL: {
         HOME: 'app/modules/home/home.html',
         INFO: 'app/modules/info/info.html',
-        PDF_REFERENCES: 'http://areascontaminadas.cetesb.sp.gov.br/relacao-de-areas-contaminadas/'
+        PDF_REFERENCES: 'https://cetesb.sp.gov.br/areas-contaminadas/relacao-de-areas-contaminadas/'
     },
     
     BACKGROUND_COLOR: '#e8eaf6',
